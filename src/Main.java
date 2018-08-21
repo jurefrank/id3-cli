@@ -12,16 +12,22 @@ public class Main
 	private static List<String> arguments;
 	private static String learnFilepath;
 	private static String testFilepath;
+	private static String parseFormat = null;
 	private static boolean metrics = false;
 	private static boolean informationGain = true;
-	private static String parseFormat = null;
-	private static String[] args = new String[] { "-t", "breastcancer_ucna.csv", "-T", "breastcancer_testna.csv", "-i",
-			"-m", "informationgain", "-p", "," };
-//	private static String[] args = new String[] { "-t", "processMe", "-T", "processMe", "-i",
-//			"-m", "informationgain", "-p", ";" };
 
-	public static void main(String[] args1)
+	private static final String[] BREAST = new String[] { "-t", "breastcancer_ucna.csv", "-T",
+			"breastcancer_testna.csv", "-i", "-m", "informationgain", "-p", "," };
+	private static final String[] CAR = new String[] { "-t", "car_ucna.csv", "-T", "car_testna.csv", "-i", "-m",
+			"informationgain", "-p", "," };
+	private static final String[] DEVELOPING = new String[] { "-t", "processMe", "-T", "processMe", "-i", "-m",
+			"informationgain", "-p", ";" };
+
+	public static void main(String[] args)
 	{
+		if (args == null || args.length < 6)
+			args = CAR;
+
 		parseArgs(args);
 		File learnFile = new File(learnFilepath);
 		File testFile = new File(testFilepath);
@@ -56,17 +62,18 @@ public class Main
 	private static void outputConfusionMatrix(int[][] confusionMatrix, List<String> list)
 	{
 		System.out.println("Confusion matrix:");
+		int spacing = 10;
 		for (String value : list)
 		{
-			System.out.printf("%5s ", value);
+			System.out.printf("%-" + spacing + "s  ", value);
 		}
-		System.out.println();
+		System.out.println(" <-- predicted class");
 		int count = 0;
 		for (int[] values : confusionMatrix)
 		{
 			for (int value : values)
 			{
-				System.out.printf("%5d |", value);
+				System.out.printf(" %-" + spacing + "d ", value);
 			}
 			System.out.println(" " + list.get(count++));
 		}
