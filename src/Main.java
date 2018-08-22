@@ -26,7 +26,7 @@ public class Main
 	public static void main(String[] args)
 	{
 		if (args == null || args.length < 6)
-			args = CAR;
+			args = DEVELOPING;
 
 		parseArgs(args);
 		File learnFile = new File(learnFilepath);
